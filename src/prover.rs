@@ -29,8 +29,10 @@ impl<H: ElementHasher> AddProver<H> {
                 state[1] = b;
                 state[2] = BaseElement::new(0);
             },
-            |_, state| {
-                state[2] = state[0] + state[1];
+            |last_row, state| {
+                if last_row == 0 { // Calculate only for first row, other rows only copies the previous one
+                    state[2] = state[0] + state[1];
+                }
             },
         );
 
